@@ -1,10 +1,30 @@
 /// <reference types= "cypress"/>
 
 describe('US-015 Funcionalidade: Busca de filmes', () => {
+  beforeEach(() => {
+    cy.visit('/')
+  });
+
   it('Deve realizar a busca dos filmes', () => {
-    cy.visit('http://127.0.0.1:3000/')
-    cy.get('#search-input').type('Inception')
+    cy.get('#search-input').type('Matrix')
     cy.get('#search-button').click()
-    cy.get('#clear-button').click()
+    cy.get('#results-section').should('contain', 'Matrix')
   })
+
+  it('Deve buscar filmes com sucesso', () => {
+    cy.fixture('filmes').then((filmes) => {
+      cy.get('#search-input').type(filmes[1].titulo)
+      cy.get('#search-button').click()
+      cy.get('#results-section').should('contain', filmes[1].titulo)
+    })
+  });
+
+  it.only('Deve buscar filmes com sucesso da lista inteira', () => {
+    cy.fixture('filmes').each((filmes) => {
+      cy.get('#search-input').clear().type(filmes.titulo)
+      cy.get('#search-button').click()
+      cy.get('#results-section').should('contain', filmes.titulo)
+    })
+  });
+  
 })
