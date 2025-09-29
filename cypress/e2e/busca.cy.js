@@ -5,6 +5,10 @@ describe('US-015 Funcionalidade: Busca de filmes', () => {
     cy.visit('/')
   });
 
+  afterEach(() => {
+    cy.screenshot()
+  });
+
   it('Deve realizar a busca dos filmes', () => {
     cy.get('#search-input').type('Matrix')
     cy.get('#search-button').click()
@@ -26,5 +30,4 @@ describe('US-015 Funcionalidade: Busca de filmes', () => {
       cy.get('#results-section').should('contain', filmes.titulo)
     })
   });
-  
 })

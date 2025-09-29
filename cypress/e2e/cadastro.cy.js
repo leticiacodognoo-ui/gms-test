@@ -5,8 +5,12 @@ describe('US-012 Funcionalidade: Cadastro de membros', () => {
     cy.visit('/')
   });
   
+  afterEach(() => {
+    cy.screenshot()
+  });
+  
   it('Deve fazer o cadastro de campos obrigatórios', () => {
-    var email = `fabio${Date.now()}@teste.com`
+    var email = `leticia${Date.now()}@teste.com`
     cy.preencherCadastro('Leticia', 'Teste' , email, '1455555555', 'Teste@5145411')
     cy.get('#signup-response').should('contain', 'Cadastro realizado com sucesso!')
   })
